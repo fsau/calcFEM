@@ -4,12 +4,12 @@ N=50;
 inds = linspace(0,2*pi,N)';
 shell = [cos(inds), sin(inds)];
 % shell = [shell; [linspace(-1,1,N)',zeros(N,1)]]; % close half-sphere (old)
-shell = [shell, -ones(size(shell,1),1)];
+shell = [shell, -ones(size(shell,1),1)]; % add boundary condition (Dirichlet)
 
-shell(abs(shell(:,1))<0.1,3) = -2; % uncomment both line to use space between plates
-shell(abs(shell(:,2))<0.1,3) = -2; % and update gD
+% shell(abs(shell(:,1))<0.1,3) = -2; % uncomment both line to use space (Neumann) between plates
+% shell(abs(shell(:,2))<0.1,3) = -2;
 
-% plot(shell(:,1), shell(:,2));
+% plot(shell(:,1), shell(:,2)); % plot shell
 
 mesh = CreateMeshTriangle('shell',shell,0.0005); % need 'triangle' installed on system, see FEMoctave docs
 mesh = MeshUpgrade(mesh, 'quadratic');
@@ -24,7 +24,7 @@ u = BVP2Dsym(mesh,1,0,0,'gD',0,0); % do the magic
 % % waitforbuttonpress(); % click on the surface for removing mesh lines
 % % set(gco(),'linestyle','none');
 % view([0,0,1]);
-% % grid();
+% grid();
 
 % figure(); % Uncomment to plot countour:
 % FEMtricontour(mesh,u); % contour
