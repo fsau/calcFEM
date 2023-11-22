@@ -14,7 +14,7 @@ shell = [shell, -ones(size(shell,1),1)]; % add boundary condition (Dirichlet)
 mesh = CreateMeshTriangle('shell',shell,0.0005); % need 'triangle' installed on system, see FEMoctave docs
 mesh = MeshUpgrade(mesh, 'quadratic');
 
-function res = gD(rz) res = (1-2*(rz(:,2)>0)).*(1-2*(rz(:,1)>0)); endfunction
+function res = gD(rz) res = (1-2*(rz(:,2)>0)).*(1-2*(rz(:,1)>0)); endfunction % Dirchlet boundary value (potential)
 
 u = BVP2Dsym(mesh,1,0,0,'gD',0,0); % do the magic
 
